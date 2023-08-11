@@ -1,2 +1,0 @@
-# bbn-doc
-API documentation
