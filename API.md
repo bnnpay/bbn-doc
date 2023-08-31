@@ -211,7 +211,7 @@ hash=d41ff6fd-d5ec-473a-8485-64ae881b8ce7&timestamp=19.04.2023+09%3a47%3a20
   "result": {
         "id": 2,
         "hash": "d41ff6fd-d5ec-473a-8485-64ae881b8ce7",
-        "amount": 5000.0000000000000000000000000,
+        "amount": 5000.00,
         "expiredAt": "2023-08-04T07:09:02.986453",
         "createdAt": "2023-08-04T06:13:06.768686",
         "confirmationDate": null,
@@ -252,7 +252,7 @@ excludeExpired=false&page=1&timestamp=19.04.2023+09%3a47%3a20
       {
         "id": 2,
         "hash": "d41ff6fd-d5ec-473a-8485-64ae881b8ce7",
-        "amount": 5000.0000000000000000000000000,
+        "amount": 5000.00,
         "expiredAt": "2023-08-04T07:09:02.986453",
         "createdAt": "2023-08-04T06:13:06.768686",
         "confirmationDate": null,
@@ -261,7 +261,7 @@ excludeExpired=false&page=1&timestamp=19.04.2023+09%3a47%3a20
       {
         "id": 1,
         "hash": "e8b901bf-9ad1-45dc-9a9f-741241a586bc",
-        "amount": 5000.0000000000000000000000000,
+        "amount": 5000.00,
         "expiredAt": "2023-08-03T14:28:39.512664",
         "createdAt": "2023-08-03T14:17:48.89544",
         "confirmationDate": "2023-08-03T14:25:39.512664",
