@@ -237,7 +237,7 @@ hash=d41ff6fd-d5ec-473a-8485-64ae881b8ce7&timestamp=19.04.2023+09%3a47%3a20
 |Параметр  | Тип |Обязательный|Примечание|
 |--|--|--|--|
 | CreatedAt|DateTime  |  Нет|  Дата создания заявки|
-| ExcludeExpired|bool  |  Да|  Исключить истекшие|
+| ExcludeExpired|bool  |  Да|  Скрыть завершенные|
 | Amount|decimal  |  Нет|  Сумма заявки|
 | Page|int  |  Нет|  Страница пагинации|
 
