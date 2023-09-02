@@ -239,7 +239,14 @@ hash=d41ff6fd-d5ec-473a-8485-64ae881b8ce7&timestamp=19.04.2023+09%3a47%3a20
 | CreatedAt|DateTime  |  Нет|  Дата создания заявки|
 | ExcludeExpired|bool  |  Да|  Скрыть завершенные|
 | Amount|decimal  |  Нет|  Сумма заявки|
+| Status|string  |  Нет|  Статус заявки|
 | Page|int  |  Нет|  Страница пагинации|
+
+Статусы заявки:
+
+Pending - ожидает оплаты
+Success - успешно завершено
+Cancel - отмена заявки
 
 Пример запроса:
 excludeExpired=false&page=1&timestamp=19.04.2023+09%3a47%3a20
