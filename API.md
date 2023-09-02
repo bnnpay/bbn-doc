@@ -215,7 +215,7 @@ hash=d41ff6fd-d5ec-473a-8485-64ae881b8ce7&timestamp=19.04.2023+09%3a47%3a20
         "expiredAt": "2023-08-04T07:09:02.986453",
         "createdAt": "2023-08-04T06:13:06.768686",
         "confirmationDate": null,
-        "result": null
+        "result": "Pending"
       }
 }
 ```
@@ -266,7 +266,7 @@ excludeExpired=false&page=1&timestamp=19.04.2023+09%3a47%3a20
         "expiredAt": "2023-08-04T07:09:02.986453",
         "createdAt": "2023-08-04T06:13:06.768686",
         "confirmationDate": null,
-        "result": null
+        "result": "Pending"
       },
       {
         "id": 1,
