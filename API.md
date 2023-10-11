@@ -129,7 +129,7 @@
 ```<json>   
 {
     "success": true,
-    "payUrl": "https://site.com/payment/a18bb2a8-b359-412b-9dc8-704b366c7850"
+    "payUrl": "https://bnn-pay.com/payment/a18bb2a8-b359-412b-9dc8-704b366c7850"
     "hash": "a18bb2a8-b359-412b-9dc8-704b366c7850"
 }
 ```
@@ -236,6 +236,7 @@ hash=d41ff6fd-d5ec-473a-8485-64ae881b8ce7&timestamp=19.04.2023+09%3a47%3a20
 
 |Параметр  | Тип |Обязательный|Примечание|
 |--|--|--|--|
+| Hash|string  |  Нет|  Отфильтровать по хешу заявки|
 | CreatedAt|DateTime  |  Нет|  Дата создания заявки|
 | ExcludeExpired|bool  |  Да|  Скрыть завершенные|
 | Amount|decimal  |  Нет|  Сумма заявки|
@@ -263,6 +264,9 @@ excludeExpired=false&page=1&timestamp=19.04.2023+09%3a47%3a20
         "id": 2,
         "hash": "d41ff6fd-d5ec-473a-8485-64ae881b8ce7",
         "amount": 5000.00,
+        "resultAmount": 0.00,
+        "aznUsdtPrice": 0.00,
+        "settlement": 0.00,
         "expiredAt": "2023-08-04T07:09:02.986453",
         "createdAt": "2023-08-04T06:13:06.768686",
         "confirmationDate": null,
@@ -272,6 +276,9 @@ excludeExpired=false&page=1&timestamp=19.04.2023+09%3a47%3a20
         "id": 1,
         "hash": "e8b901bf-9ad1-45dc-9a9f-741241a586bc",
         "amount": 5000.00,
+        "resultAmount": 4850.00,
+        "aznUsdtPrice": 1.7,
+        "settlement": 2852.94,
         "expiredAt": "2023-08-03T14:28:39.512664",
         "createdAt": "2023-08-03T14:17:48.89544",
         "confirmationDate": "2023-08-03T14:25:39.512664",
@@ -393,7 +400,7 @@ hash=eb43fea6-80e2-4d31-a1d1-cc55fb6e327d&timestamp=19.04.2023+09%3a47%3a20
 
 Когда статус транзакции будет изменен, вы получите обратные вызовы на адрес указанный при создании заявки:
 
-POST-запрос с телом {"Hash": "хеш заявки", "Status", "Статус заявки", "ExternalId": "Внешний ключ магазина, заданный при создании заявки", "Amount": 100 }
+POST-запрос с телом {"Hash": "хеш заявки", "Status", "Статус заявки", "ExternalId": "Внешний ключ магазина, заданный при создании заявки", "Amount": Фиатная сумма с учетом комиссии, "AznUsdtPrice": Актуальный курс, "Settlement": Сконвертированная сумма в USDT с учетом комиссии }
 
 Запрос подписывается ключом api и секретом, по аналогии авторизации для вызова методов апи
 
@@ -408,6 +415,27 @@ Cancel = "Отменено",
 
 Пример кода (C#) метод контроллера для принятия и обработки уведомлений
 
+      /* Пример модели коллбека */
+      public class OrderStatusNotification
+      {
+          public string Hash { get; set; }
+          public string Status { get; set; }
+          public string ExternalId { get; set; }
+          public decimal Amount { get; set; }
+          public decimal AznUsdtPrice { get; set; }
+          public decimal Settlement { get; set; }
+      
+          public OrderStatusNotification(string hash, string status, string externalId, decimal amount, decimal aznUsdtPrice, decimal settlement)
+          {
+              Hash = hash;
+              Status = status;
+              ExternalId = externalId;
+              Amount = amount;
+              AznUsdtPrice = aznUsdtPrice;
+              Settlement = settlement;
+          }
+      }
+      
       /* Расширение позволяющая получать полезную нагрузку из HttpRequest */
       public static class HttpContextExtension
       {
@@ -471,3 +499,30 @@ Cancel = "Отменено",
             return Ok();
         }
     }
+
+### Уведомление о изменении статуса банка
+
+Мы отправляем колббек со статусом банка при его изменении (например включен или отключен) по адресу указанному в личном кабинете, раздел профиль, так же где вы указываете адрес коллбека и возврата.
+
+POST-запрос с телом {"Id": "Id банка", "Name", "Название банка", "IsEnable": Если true, то банк активен, если false, то отключен }
+
+Запрос подписывается ключом api и секретом, по аналогии авторизации для вызова методов апи
+
+Для проверки корректности информации, обязательно проверяйте хеш модели с хешем из заголовка "SIGNATURE"
+
+Пример модели коллбека, примеры метода обработки коллбека, можете посмотреть выше
+
+      /* Пример модели коллбека */
+      public class BankStatusNotification
+      {
+          public int Id { get; set; }
+          public string Name { get; set; }
+          public bool IsEnable { get; set; }
+      
+          public BankStatusNotification(int id, string name, bool isEnable)
+          {
+              Id = id;
+              Name = name;
+              IsEnable = isEnable;
+          }
+      }
