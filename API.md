@@ -212,6 +212,10 @@ hash=d41ff6fd-d5ec-473a-8485-64ae881b8ce7&timestamp=19.04.2023+09%3a47%3a20
         "id": 2,
         "hash": "d41ff6fd-d5ec-473a-8485-64ae881b8ce7",
         "amount": 5000.00,
+        "resultAmount": 4850.00,
+        "aznUsdtPrice": 1.7,
+        "settlement": 2852.94,
+        "fee": 150.00,
         "expiredAt": "2023-08-04T07:09:02.986453",
         "createdAt": "2023-08-04T06:13:06.768686",
         "confirmationDate": null,
@@ -267,6 +271,7 @@ excludeExpired=false&page=1&timestamp=19.04.2023+09%3a47%3a20
         "resultAmount": 0.00,
         "aznUsdtPrice": 0.00,
         "settlement": 0.00,
+        "fee": 0.00,
         "expiredAt": "2023-08-04T07:09:02.986453",
         "createdAt": "2023-08-04T06:13:06.768686",
         "confirmationDate": null,
@@ -279,6 +284,7 @@ excludeExpired=false&page=1&timestamp=19.04.2023+09%3a47%3a20
         "resultAmount": 4850.00,
         "aznUsdtPrice": 1.7,
         "settlement": 2852.94,
+        "fee": 150.00,
         "expiredAt": "2023-08-03T14:28:39.512664",
         "createdAt": "2023-08-03T14:17:48.89544",
         "confirmationDate": "2023-08-03T14:25:39.512664",
@@ -400,7 +406,7 @@ hash=eb43fea6-80e2-4d31-a1d1-cc55fb6e327d&timestamp=19.04.2023+09%3a47%3a20
 
 Когда статус транзакции будет изменен, вы получите обратные вызовы на адрес указанный при создании заявки:
 
-POST-запрос с телом {"Hash": "хеш заявки", "Status", "Статус заявки", "ExternalId": "Внешний ключ магазина, заданный при создании заявки", "Amount": Фиатная сумма с учетом комиссии, "AznUsdtPrice": Актуальный курс, "Settlement": Сконвертированная сумма в USDT с учетом комиссии }
+POST-запрос с телом {"Hash": "хеш заявки", "Status", "Статус заявки", "ExternalId": "Внешний ключ магазина, заданный при создании заявки", "Amount": Фиатная сумма с учетом комиссии в AZN, "AznUsdtPrice": Актуальный курс USDT/AZN, "Settlement": Сконвертированная сумма в USDT с учетом комиссии, "Fee": Размер комиссии в AZN }
 
 Запрос подписывается ключом api и секретом, по аналогии авторизации для вызова методов апи
 
@@ -424,8 +430,9 @@ Cancel = "Отменено",
           public decimal Amount { get; set; }
           public decimal AznUsdtPrice { get; set; }
           public decimal Settlement { get; set; }
+          public decimal Fee { get; set; }
       
-          public OrderStatusNotification(string hash, string status, string externalId, decimal amount, decimal aznUsdtPrice, decimal settlement)
+          public OrderStatusNotification(string hash, string status, string externalId, decimal amount, decimal aznUsdtPrice, decimal settlement, decimal fee)
           {
               Hash = hash;
               Status = status;
@@ -433,6 +440,7 @@ Cancel = "Отменено",
               Amount = amount;
               AznUsdtPrice = aznUsdtPrice;
               Settlement = settlement;
+              Fee = fee;
           }
       }
       
