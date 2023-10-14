@@ -135,10 +135,8 @@
 ```<json>   
 {
     "success": true,
-    "result": {
-        "hash": "b78903c0-ed46-4d94-9d53-f09a3f876f51",
-        "payUrl": "https://bnn-pay.com/payment/b78903c0-ed46-4d94-9d53-f09a3f876f51"
-    }
+    "hash": "b78903c0-ed46-4d94-9d53-f09a3f876f51",
+    "payUrl": "https://bnn-pay.com/payment/b78903c0-ed46-4d94-9d53-f09a3f876f51"
 }
 ```
 
@@ -168,11 +166,9 @@
 ```<json>   
 {
     "success": true,
-    "result": {
-        "hash": "b78903c0-ed46-4d94-9d53-f09a3f876f51",
-        "payUrl": "https://bnn-pay.com/payment/b78903c0-ed46-4d94-9d53-f09a3f876f51",
-        "cardDetail": "4127209302903924"
-    }
+    "hash": "b78903c0-ed46-4d94-9d53-f09a3f876f51",
+    "payUrl": "https://bnn-pay.com/payment/b78903c0-ed46-4d94-9d53-f09a3f876f51",
+    "cardDetail": "4127209302903924"
 }
 ```
 
