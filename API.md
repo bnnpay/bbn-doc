@@ -154,7 +154,9 @@ timestamp=19.04.2023+09%3a47%3a20
 
 `POST /order/create`
 
-Метод создания заявки для оплаты. Опционально можно указать Id банка, чтобы создать заявку с выбранным банком.
+Метод создания заявки для оплаты. Опционально можно указать Id банка, чтобы создать заявку с выбранным банком. 
+
+Желательно указывать информацию о клиенте в поле "ClientInfo".
 
 В случае успеха, возвращается хеш заявки и url онлайн-оплаты.
 
@@ -177,6 +179,7 @@ timestamp=19.04.2023+09%3a47%3a20
 | Amount |decimal|  Да|  Сумма заявки|
 | CallbackUrl|string|  Да|  URL оповещения о результата|
 | ReturnUrl|string|  Нет|  URL возврата в случае успеха|
+| ClientInfo|string|  Нет|  Информация о клиенте|
 | BankId|int|  Нет |  Id выбранного банка|
 
 Пример запроса:
@@ -186,7 +189,8 @@ timestamp=19.04.2023+09%3a47%3a20
   "orderId": "11111111232132",
   "amount": 10000,
   "callbackUrl": "https://site.com/pay/result",
-  "returnUrl": "https://site.com/pay/success"
+  "returnUrl": "https://site.com/pay/success",
+  "clientInfo": "User777"
 }
 ```
 Ответ (статус код 200):
@@ -219,6 +223,7 @@ timestamp=19.04.2023+09%3a47%3a20
   "amount": 10000,
   "callbackUrl": "https://site.com/pay/result",
   "returnUrl": "https://site.com/pay/success",
+  "clientInfo": "User777",
   "bankId": 1
 }
 ```
@@ -248,6 +253,69 @@ timestamp=19.04.2023+09%3a47%3a20
     }
 }
 ```
+
+### Создать фиатную заявку приема средств с любым банком
+
+`POST /order/create/any/bank`
+
+Метод создания заявки для оплаты с любым банком.
+
+Желательно указывать информацию о клиенте в поле "ClientInfo".
+
+В случае успеха возвращается хеш, url, id и название банка, реквизиты.
+
+Вам возвращается код ответа 400 и текст ошибки, если:
+- При ошибке валидации модели;
+- Если вы используете внешний ключ повторно;
+- Если все реквизиты заняты;
+- Если вы не указали URL коллбека и в профиле он также не указан
+  
+**Параметры:** Штамп времени в строке запроса
+
+|Параметр  | Тип |Обязательный|Примечание|
+|--|--|--|--|
+| OrderId |string  |  Да|  Внешний ключ заявки|
+| Amount |decimal|  Да|  Сумма заявки|
+| CallbackUrl|string|  Да|  URL оповещения о результата|
+| ReturnUrl|string|  Нет|  URL возврата в случае успеха|
+| ClientInfo|string|  Нет|  Информация о клиенте|
+
+Пример запроса:
+
+```<json>   
+{
+  "orderId": "11111111232132",
+  "amount": 10000,
+  "callbackUrl": "https://site.com/pay/result",
+  "returnUrl": "https://site.com/pay/success",
+  "clientInfo": "User777"
+}
+```
+Ответ (статус код 200):
+```<json>   
+{
+    "success": true,
+    "hash": "b78903c0-ed46-4d94-9d53-f09a3f876f51",
+    "payUrl": "https://bnn-pay.com/payment/b78903c0-ed46-4d94-9d53-f09a3f876f51",
+    "bankId": 1,
+    "BankName": "ATBBank",
+    "cardDetail": "4127209302903924"
+}
+```
+
+Ошибка:
+```<json>   
+{
+    "success": false,
+    "error": {
+        "code": 401,
+        "descriptionCode": 401,
+        "message": "Unauthorized",
+        "time": "2023-08-11T11:25:31.6590684Z"
+    }
+}
+```
+
 ### Получить фиатную заявку приема средств по хешу
 
 `GET /order`
@@ -285,7 +353,8 @@ hash=d41ff6fd-d5ec-473a-8485-64ae881b8ce7&timestamp=19.04.2023+09%3a47%3a20
         "expiredAt": "2023-08-04T07:09:02.986453",
         "createdAt": "2023-08-04T06:13:06.768686",
         "confirmationDate": null,
-        "result": "Success"
+        "result": "Success",
+        "clientInfo": "User777"
       }
 }
 ```
@@ -340,7 +409,8 @@ excludeExpired=false&page=1&timestamp=19.04.2023+09%3a47%3a20
         "expiredAt": "2023-08-04T07:09:02.986453",
         "createdAt": "2023-08-04T06:13:06.768686",
         "confirmationDate": null,
-        "result": "Pending"
+        "result": "Pending",
+        "clientInfo": "User777"
       },
       {
         "id": 1,
@@ -353,7 +423,8 @@ excludeExpired=false&page=1&timestamp=19.04.2023+09%3a47%3a20
         "expiredAt": "2023-08-03T14:28:39.512664",
         "createdAt": "2023-08-03T14:17:48.89544",
         "confirmationDate": "2023-08-03T14:25:39.512664",
-        "result": "Success"
+        "result": "Success",
+        "clientInfo": null
       }
     ],
     "currentPage": 1,
