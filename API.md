@@ -741,7 +741,9 @@ page=1&timestamp=19.04.2023+09%3a47%3a20
 
 Когда статус транзакции будет изменен, вы получите обратные вызовы на адрес указанный при создании заявки:
 
-POST-запрос с телом {"Hash": "хеш заявки", "Status", "Статус заявки", "ExternalId": "Внешний ключ магазина, заданный при создании заявки", "Amount": Фиатная сумма с учетом комиссии в AZN, "AznUsdtPrice": Актуальный курс USDT/AZN, "Settlement": Сконвертированная сумма в USDT с учетом комиссии, "Fee": Размер комиссии в AZN }
+POST-запрос с телом {"Hash": "хеш заявки", "Status", "Статус заявки", "ExternalId": "Внешний ключ магазина, заданный при создании заявки", "Amount": Фиатная сумма с учетом комиссии в AZN, "AznUsdtPrice": Актуальный курс USDT/AZN, "Settlement": Сконвертированная сумма в USDT с учетом комиссии, "Fee": Размер комиссии в AZN, "ReasonCancel": "Возможная причина отмены" }
+
+ReasonCancel - необязательный строковый параметр причины отмены. В случае отмены заявки PayOut сервис указывает причину отказа, например "Карта заблокирована"
 
 Запрос подписывается ключом api и секретом, по аналогии авторизации для вызова методов апи
 
@@ -766,8 +768,17 @@ Cancel = "Отменено",
           public decimal AznUsdtPrice { get; set; }
           public decimal Settlement { get; set; }
           public decimal Fee { get; set; }
+          public string? ReasonCancel { get; set; }
       
-          public OrderStatusNotification(string hash, string status, string externalId, decimal amount, decimal aznUsdtPrice, decimal settlement, decimal fee)
+          public OrderStatusNotification(
+          string hash, 
+          string status, 
+          string externalId, 
+          decimal amount, 
+          decimal aznUsdtPrice, 
+          decimal settlement, 
+          decimal fee,
+          string? reasonCancel)
           {
               Hash = hash;
               Status = status;
@@ -776,6 +787,7 @@ Cancel = "Отменено",
               AznUsdtPrice = aznUsdtPrice;
               Settlement = settlement;
               Fee = fee;
+              ReasonCancel = reasonCancel;
           }
       }
       
