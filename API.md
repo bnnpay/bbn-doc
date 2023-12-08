@@ -177,7 +177,7 @@ timestamp=19.04.2023+09%3a47%3a20
 |--|--|--|--|
 | OrderId |string  |  Да|  Внешний ключ заявки|
 | Amount |decimal|  Да|  Сумма заявки|
-| CallbackUrl|string|  Да|  URL оповещения о результата|
+| CallbackUrl|string|  Нет|  URL оповещения о результата|
 | ReturnUrl|string|  Нет|  URL возврата в случае успеха|
 | ClientInfo|string|  Нет|  Информация о клиенте|
 | BankId|int|  Нет |  Id выбранного банка|
@@ -276,7 +276,7 @@ timestamp=19.04.2023+09%3a47%3a20
 |--|--|--|--|
 | OrderId |string  |  Да|  Внешний ключ заявки|
 | Amount |decimal|  Да|  Сумма заявки|
-| CallbackUrl|string|  Да|  URL оповещения о результата|
+| CallbackUrl|string|  Нет|  URL оповещения о результата|
 | ReturnUrl|string|  Нет|  URL возврата в случае успеха|
 | ClientInfo|string|  Нет|  Информация о клиенте|
 
